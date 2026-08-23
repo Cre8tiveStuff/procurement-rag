@@ -1,0 +1,6 @@
+filename,raw_path,processed_path,page_count
+contract_B_managed_services.pdf,data/raw/contract_B_managed_services.pdf,data/processed/contract_B_managed_services.txt,1
+contract_C_equipment_lease.pdf,data/raw/contract_C_equipment_lease.pdf,data/processed/contract_C_equipment_lease.txt,1
+contract_E_logistics_supply.pdf,data/raw/contract_E_logistics_supply.pdf,data/processed/contract_E_logistics_supply.txt,1
+contract_D_consulting_staffing.pdf,data/raw/contract_D_consulting_staffing.pdf,data/processed/contract_D_consulting_staffing.txt,1
+contract_A_saas_license.pdf,data/raw/contract_A_saas_license.pdf,data/processed/contract_A_saas_license.txt,1
