@@ -1,6 +1,14 @@
+cat << 'EOF' > .gitignore
+# Virtual environment
 venv/
-.env
+.venv/
 __pycache__/
 *.pyc
-.DS_Store
-data/embeddings/
+
+# Data and vector store databases
+data/chroma_db/
+*.log
+
+# Environment variables / API keys
+.env
+EOF
