@@ -1,14 +1,20 @@
-cat << 'EOF' > .gitignore
 # Virtual environment
 venv/
 .venv/
 __pycache__/
 *.pyc
 
-# Data and vector store databases
+# Vector store databas
 data/chroma_db/
+
+# Generated pipeline artifacts (regenerable by running scripts/01-04)
+data/chunked_contracts.json
+data/embedded_contracts.json
+data/ingested_contracts.json
+data/embeddings/
+
+# Logs
 *.log
 
 # Environment variables / API keys
 .env
-EOF
