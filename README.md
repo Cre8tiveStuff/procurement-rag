@@ -1,5 +1,8 @@
 # Procurement RAG Analyst
 
+
+**Open towards Team Collaborations & Contract Opportunities.**
+
 An intelligent procurement assistant that uses local vector embeddings to perform semantic search over legal contracts and leverages the Google Gemini API to deliver strict, context-bound answers for contract queries.
 
 ## Features
