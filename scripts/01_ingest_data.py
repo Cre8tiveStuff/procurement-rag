@@ -38,8 +38,8 @@ def save_ingested_data(documents: list[dict], output_path: Path) -> None:
 
 def main():
     base_dir = Path(__file__).resolve().parent.parent
-    data_dir = base_dir / "data"
-    output_file = data_dir / "ingested_contracts.json"
+    data_dir = base_dir / "data" / "processed"
+    output_file = base_dir / "data" / "ingested_contracts.json"
 
     print("Starting data ingestion...")
     docs = load_txt_files(data_dir)
