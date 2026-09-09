@@ -1,0 +1,22 @@
+[build-system]
+requires = ["setuptools>=68.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "procurement-rag"
+version = "0.1.0"
+description = "Local RAG assistant for procurement contract analysis using Ollama"
+requires-python = ">=3.9"
+dependencies = [
+    "fastapi",
+    "uvicorn",
+    "pydantic",
+    "sentence-transformers",
+    "chromadb",
+    "ollama",
+
+ ]
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["src*"]
