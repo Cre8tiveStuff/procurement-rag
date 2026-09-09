@@ -1,16 +1,6 @@
-import importlib.util
 from pathlib import Path
 import ollama
-
-# Dynamically import 05_query_rag.py (bypasses module name syntax errors)
-script_path = Path(__file__).resolve().parent / "05_query_rag.py"
-spec = importlib.util.spec_from_file_location("query_rag", script_path)
-query_rag = importlib.util.module_from_spec(spec)
-spec.loader.exec_module(query_rag)
-
-query_vector_store = query_rag.query_vector_store
-format_rag_prompt = query_rag.format_rag_prompt
-
+from src.query_rag import query_vector_store, format_rag_prompt
 
 def generate_answer(prompt: str, model_name: str = "llama3.2") -> str:
     """Sends the formatted RAG prompt to a local Ollama model and returns the answer."""
@@ -30,7 +20,7 @@ def main():
 
     if not chroma_db_dir.exists():
         print(f"Vector store directory not found: {chroma_db_dir}")
-        print("Please run scripts/04_vector_store.py first.")
+        print("Please run src/vector_store.py first.")
         return
 
     user_query = "What is the delivery timeline agreed upon by Supplier Inc?"
