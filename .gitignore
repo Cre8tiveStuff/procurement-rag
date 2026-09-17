@@ -19,3 +19,4 @@ data/embeddings/
 # Environment variables / API keys
 .env
 *.egg-info/
+index_status.db
