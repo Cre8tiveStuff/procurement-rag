@@ -14,7 +14,7 @@ dependencies = [
     "sentence-transformers",
     "chromadb",
     "ollama",
-
+    "arc-agentic-reasoning-chain @ git+https://github.com/Cre8tiveStuff/ARC-Agentic-Reasoning-Chain.git"
  ]
 
 [tool.setuptools.packages.find]
