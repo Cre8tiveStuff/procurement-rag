@@ -5,3 +5,4 @@ sentence-transformers
 chromadb
 ollama
 git+https://github.com/Cre8tiveStuff/ARC-Agentic-Reasoning-Chain.git
+context-curation-ledger @ git+https://github.com/Cre8tiveStuff/Context-Curation-Ledger.git

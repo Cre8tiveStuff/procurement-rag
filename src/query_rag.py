@@ -41,6 +41,24 @@ def query_vector_store(
     return retrieved_chunks
 
 
+def curate_chunks(chunks: list[dict], max_tokens: int = 2000) -> list[dict]:
+    """Prunes retrieved chunks to a real token budget, then reorders survivors
+    so the most relevant sit first and last, exploiting the model's
+    stronger attention at the start and end of its context window."""
+    from ccl import count_tokens, position_aware_order
+
+    selected = []
+    used = 0
+    for chunk in chunks:
+        cost = count_tokens(chunk["document_text"])
+        if used + cost > max_tokens:
+            break
+        selected.append(chunk)
+        used += cost
+
+    return position_aware_order(selected)
+
+
 def format_rag_prompt(query_text: str, retrieved_chunks: list[dict]) -> str:
     """Formats retrieved context and user query into a clean prompt for an LLM."""
     context_blocks = []
@@ -49,9 +67,9 @@ def format_rag_prompt(query_text: str, retrieved_chunks: list[dict]) -> str:
             f"--- Context Block {idx} (ID: {item['chunk_id']}) ---\n"
             f"{item['document_text']}"
         )
-    
+
     context_str = "\n\n".join(context_blocks)
-    
+
     prompt = (
         "You are an AI assistant analyzing procurement contracts.\n"
         "Answer the user's question relying strictly on the context provided below.\n\n"
@@ -71,7 +89,6 @@ def main():
         print("Please run scripts/04_vector_store.py first.")
         return
 
-    # Example query
     user_query = "What is the delivery timeline agreed upon by Supplier Inc?"
 
     retrieved_chunks = query_vector_store(
@@ -80,8 +97,10 @@ def main():
         top_k=2
     )
 
-    print(f"=== RETRIEVED {len(retrieved_chunks)} MATCHES ===")
-    for idx, match in enumerate(retrieved_chunks, 1):
+    curated_chunks = curate_chunks(retrieved_chunks)
+
+    print(f"=== RETRIEVED {len(retrieved_chunks)} MATCHES, CURATED TO {len(curated_chunks)} ===")
+    for idx, match in enumerate(curated_chunks, 1):
         print(f"\nMatch {idx} [Distance: {match['distance']:.4f}]")
         print(f"Source Doc: {match['metadata'].get('file_name', 'N/A')}")
         print(f"Text: {match['document_text']}")
@@ -89,7 +108,7 @@ def main():
     print("\n" + "=" * 50)
     print("=== CONSTRUCTED RAG PROMPT ===")
     print("=" * 50)
-    rag_prompt = format_rag_prompt(user_query, retrieved_chunks)
+    rag_prompt = format_rag_prompt(user_query, curated_chunks)
     print(rag_prompt)
 
 
